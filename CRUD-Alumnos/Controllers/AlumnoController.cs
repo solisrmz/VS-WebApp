@@ -11,6 +11,7 @@ using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 namespace CRUD_Alumnos.Controllers{
     public class AlumnoController : Controller{
 
+        //Obtiene todos los alumnos
         //GET: Alumno
         public ActionResult Index(){
             try{
@@ -24,10 +25,13 @@ namespace CRUD_Alumnos.Controllers{
             //List<Alumno>lista = db.Alumno.Where(a => a.Edad > 18).ToList();
         }
 
+        //Devuelve la vista para agregar un alumno
         public ActionResult Agregar(){
             return View();
         }
 
+
+        //Guarda los datos en la BD
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Agregar(Alumno a){
@@ -50,12 +54,16 @@ namespace CRUD_Alumnos.Controllers{
             }
         }
 
+
+        //Devuelve la vista para poder editar GET
         public ActionResult Editar(int id){
             using (var db = new AlumnoContext()){
                   Alumno al = db.Alumno.Find(id);
                   return View(al);
             }
         }
+
+        //Hace la inserción de los datos ya editados POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Editar(Alumno a){
@@ -81,6 +89,7 @@ namespace CRUD_Alumnos.Controllers{
         
         }
 
+        //Muestra los detalles de un alumno
         public ActionResult Detalles(int id){
             using (var db = new AlumnoContext()){
                 Alumno al = db.Alumno.Find(id);
@@ -88,6 +97,7 @@ namespace CRUD_Alumnos.Controllers{
             }
         }
 
+        //Método para eliminar elemento de la BD
         public ActionResult Eliminar(int id){
             using (var db = new AlumnoContext()){
                 Alumno al = db.Alumno.Find(id);
