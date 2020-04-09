@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CRUD_Alumnos.Models.Alumno>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de alumnos</h2>
+
+<button class="btn btn-primary btn-sm">
+    @Html.ActionLink("Registrar alumno", "Agregar")
+</button>
+<table class="table">
+    <tr>
+        <th>
+            Nombre completo
+        </th>
+        <th>
+            Edad
+        </th>
+        <th>
+            Sexo
+        </th>
+        <th>
+            Fecha de registro
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreCompleto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edad)
+        </td>
+        <td>
+            @{
+                if (item.Sexo == "M"){
+                    <span>Masculino</span>
+                }
+                else{
+                    <span>Femenino</span>
+                }
+            }
+        </td>
+        <td>
+            @item.fechaRegistro.ToShortDateString()
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Editar", new { id=item.id })
+            @Html.ActionLink("Detalles", "Detalles", new { id=item.id }) |
+            @Html.ActionLink("Eliminar", "Eliminar", new { id=item.id }, new {@class = "aElimina" })
+        </td>
+    </tr>
+}
+
+</table>
+@section scripts{
+    <script>
+        $(".aElimina").click(function (event){
+            if (!confirm('¿Estás seguro que deseas eliminar este elemento?')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+}
