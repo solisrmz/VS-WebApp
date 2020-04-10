@@ -15,9 +15,34 @@
           <Property Name="Edad" Type="int" Nullable="false" />
           <Property Name="Sexo" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="CodCiudad" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Alumno_Ciudad">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="1" />
+          <End Role="Alumno" Type="Self.Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="CodCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AlumnosDBModelStoreContainer">
           <EntitySet Name="Alumno" EntityType="Self.Alumno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Alumno_Ciudad" Association="Self.FK_Alumno_Ciudad">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -25,6 +50,11 @@
       <Schema Namespace="AlumnosDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="AlumnoContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Alumno" EntityType="AlumnosDBModel.Alumno" />
+          <EntitySet Name="Ciudad" EntityType="AlumnosDBModel.Ciudad" />
+          <AssociationSet Name="FK_Alumno_Ciudad" Association="AlumnosDBModel.FK_Alumno_Ciudad">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Alumno" EntitySet="Alumno" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Alumno">
           <Key>
@@ -36,7 +66,29 @@
           <Property Name="Edad" Type="Int32" Nullable="false" />
           <Property Name="Sexo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CodCiudad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ciudad" Relationship="AlumnosDBModel.FK_Alumno_Ciudad" FromRole="Alumno" ToRole="Ciudad" />
         </EntityType>
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Alumno" Relationship="AlumnosDBModel.FK_Alumno_Ciudad" FromRole="Ciudad" ToRole="Alumno" />
+        </EntityType>
+        <Association Name="FK_Alumno_Ciudad">
+          <End Type="AlumnosDBModel.Ciudad" Role="Ciudad" Multiplicity="1" />
+          <End Type="AlumnosDBModel.Alumno" Role="Alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Alumno">
+              <PropertyRef Name="CodCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -46,11 +98,20 @@
           <EntitySetMapping Name="Alumno">
             <EntityTypeMapping TypeName="AlumnosDBModel.Alumno">
               <MappingFragment StoreEntitySet="Alumno">
+                <ScalarProperty Name="CodCiudad" ColumnName="CodCiudad" />
                 <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
                 <ScalarProperty Name="Sexo" ColumnName="Sexo" />
                 <ScalarProperty Name="Edad" ColumnName="Edad" />
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ciudad">
+            <EntityTypeMapping TypeName="AlumnosDBModel.Ciudad">
+              <MappingFragment StoreEntitySet="Ciudad">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

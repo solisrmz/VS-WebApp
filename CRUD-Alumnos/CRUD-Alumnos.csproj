@@ -147,6 +147,9 @@
       <DependentUpon>ModelAlumnos.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AlumnoCE.cs" />
+    <Compile Include="Models\Ciudad.cs">
+      <DependentUpon>ModelAlumnos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -253,6 +256,8 @@
     <Content Include="Views\Alumno\Agregar.cshtml" />
     <Content Include="Views\Alumno\Editar.cshtml" />
     <Content Include="Views\Alumno\Detalles.cshtml" />
+    <Content Include="Views\Alumno\AgregarCiudad.cshtml" />
+    <Content Include="Views\Alumno\ListarCiudades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

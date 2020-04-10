@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CRUD_Alumnos.Models.Alumno>
+﻿@model IEnumerable<CRUD_Alumnos.Models.AlumnoCE>
 
 @{
     ViewBag.Title = "Index";
@@ -22,38 +22,46 @@
             Sexo
         </th>
         <th>
+            Ciudad
+        </th>
+        <th>
             Fecha de registro
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NombreCompleto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Edad)
-        </td>
-        <td>
-            @{
-                if (item.Sexo == "M"){
-                    <span>Masculino</span>
-                }
-                else{
-                    <span>Femenino</span>
-                }
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.NombreCompleto)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Edad)
+    </td>
+    <td>
+        @{
+            if (item.Sexo == "M")
+            {
+                <span>Masculino</span>
             }
-        </td>
-        <td>
-            @item.fechaRegistro.ToShortDateString()
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Editar", new { id=item.id })
-            @Html.ActionLink("Detalles", "Detalles", new { id=item.id }) |
-            @Html.ActionLink("Eliminar", "Eliminar", new { id=item.id }, new {@class = "aElimina" })
-        </td>
-    </tr>
+            else
+            {
+                <span>Femenino</span>
+            }
+        }
+    </td>
+    <td>
+        @item.NombreCiudad
+    </td>
+    <td>
+        @item.fechaRegistro.ToShortDateString()
+    </td>
+    <td>
+        @Html.ActionLink("Editar", "Editar", new { id = item.id })
+        @Html.ActionLink("Detalles", "Detalles", new { id = item.id }) |
+        @Html.ActionLink("Eliminar", "Eliminar", new { id = item.id }, new { @class = "aElimina" })
+    </td>
+</tr>
 }
 
 </table>

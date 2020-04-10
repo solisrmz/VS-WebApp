@@ -12,16 +12,18 @@ namespace CRUD_Alumnos.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Alumno
+    public partial class Ciudad
     {
-        public int id { get; set; }
-        public string Nombres { get; set; }
-        public string Apellidos { get; set; }
-        public int Edad { get; set; }
-        public string Sexo { get; set; }
-        public System.DateTime fechaRegistro { get; set; }
-        public int CodCiudad { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Ciudad()
+        {
+            this.Alumno = new HashSet<Alumno>();
+        }
     
-        public virtual Ciudad Ciudad { get; set; }
+        public int id { get; set; }
+        public string Nombre { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Alumno> Alumno { get; set; }
     }
 }
